@@ -1,4 +1,4 @@
-// $Id$
+// $Id: Line.java 4 2009-03-16 14:44:53Z georgebashi $
 
 /*
     This file is part of PTurtle.
@@ -17,7 +17,7 @@
     along with PTurtle.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package pturtle;
+package terrapin;
 
 import processing.core.PApplet;
 

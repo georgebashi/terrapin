@@ -1,4 +1,4 @@
-// $Id$
+// $Id: HistoryTurtle.java 4 2009-03-16 14:44:53Z georgebashi $
 
 /*
     This file is part of PTurtle.
@@ -17,41 +17,41 @@
     along with PTurtle.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package pturtle;
+package terrapin;
 
 import java.util.ArrayList;
 import processing.core.PApplet;
 
 /**
- * HistoryTurtle extends Turtle to record lines drawn in the lines array. These
+ * HistoryTurtle extends Terrapin to record lines drawn in the lines array. These
  * can be edited so as to change what has already been drawn. <strong>This class
- * is much, much slower than the normal Turtle class</strong>.
+ * is much, much slower than the normal Terrapin class</strong>.
  * 
  * @author George Bashi
  * @author Ollie Glass
  */
-public class HistoryTurtle extends Turtle {
+public class HistoryTerrapin extends Terrapin {
 	/** The lines previously drawn */
 	public ArrayList<Line> lines = new ArrayList<Line>();
 	
 	/**
-	 * Create a new turtle
+	 * Create a new Terrapin
 	 * 
 	 * @param applet
 	 *            the PApplet to draw to.
 	 */
-	public HistoryTurtle(PApplet applet) {
+	public HistoryTerrapin(PApplet applet) {
 		super(applet);
 		applet.registerDraw(this);
 	}
 	
 	/**
-	 * Copy a turtle
+	 * Copy a Terrapin
 	 * 
 	 * @param parent
-	 *            Turtle to copy
+	 *            Terrapin to copy
 	 */
-	public HistoryTurtle(Turtle parent) {
+	public HistoryTerrapin(Terrapin parent) {
 		super(parent);
 		applet.registerDraw(this);
 	}
@@ -69,7 +69,7 @@ public class HistoryTurtle extends Turtle {
 	}
 	
 	/**
-	 * Override {@link pturtle.Turtle#moveTo(int, int)} to record lines.
+	 * Override {@link terrapin.Terrapin#moveTo(int, int)} to record lines.
 	 * 
 	 * @param x
 	 *            location in x axis

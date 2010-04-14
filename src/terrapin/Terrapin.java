@@ -1,4 +1,4 @@
-// $Id$
+// $Id: Turtle.java 4 2009-03-16 14:44:53Z georgebashi $
 
 /*
     This file is part of PTurtle.
@@ -17,39 +17,39 @@
     along with PTurtle.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package pturtle;
+package terrapin;
 
 import java.util.List;
 import processing.core.PApplet;
 
 /**
- * Turtle class, making ideas from the LOGO teaching language available in Processing.
+ * Terrapin class, making ideas from the LOGO teaching language available in Processing.
  * 
  * @author George Bashi
  * @author Ollie Glass
  */
-public class Turtle {
+public class Terrapin {
 	/** x location on screen. */
 	public int x;
 	/** y location on screen. */
 	public int y;
-	/** Colour of line drawn by Turtle (as a Processing color). */
+	/** Colour of line drawn by Terrapin (as a Processing color). */
 	public int drawColor;
-	/** If false, the Turtle moves but does not leave a trail. */
+	/** If false, the Terrapin moves but does not leave a trail. */
 	public boolean drawing = true;
-	/** The angle (in radians) that the Turtle is facing. */
+	/** The angle (in degrees) that the Terrapin is facing. */
 	private float rotation;
 	/** The PApplet to render to. */
 	public final PApplet applet;
 	
 	/**
-	 * Standard constructor, creates a Turtle in the middle of the screen which
+	 * Standard constructor, creates a Terrapin in the middle of the screen which
 	 * draws in white.
 	 * 
 	 * @param applet
 	 *            PApplet to render to.
 	 */
-	public Turtle(PApplet applet) {
+	public Terrapin(PApplet applet) {
 		this.applet = applet;
 		x = applet.width / 2;
 		y = applet.height / 2;
@@ -57,12 +57,12 @@ public class Turtle {
 	}
 	
 	/**
-	 * "Copy" constructor, creates an identical Turtle to the one passed in.
+	 * "Copy" constructor, creates an identical Terrapin to the one passed in.
 	 * 
 	 * @param t
-	 *            Turtle to copy.
+	 *            Terrapin to copy.
 	 */
-	public Turtle(Turtle t) {
+	public Terrapin(Terrapin t) {
 		applet = t.applet;
 		x = t.x;
 		y = t.y;
@@ -72,7 +72,7 @@ public class Turtle {
 	}
 	
 	/**
-	 * Move Turtle backward.
+	 * Move Terrapin backward.
 	 * 
 	 * @param amount
 	 *            number of pixels to move by.
@@ -82,20 +82,21 @@ public class Turtle {
 	}
 	
 	/**
-	 * Move Turtle forward.
+	 * Move Terrapin forward.
 	 * 
 	 * @param amount
 	 *            number of pixels to move by.
 	 */
 	public void forward(int amount) {
 		int newX, newY;
-		newX = x + PApplet.round(amount * PApplet.cos(rotation));
-		newY = y + PApplet.round(amount * PApplet.sin(rotation));
+		float rotRad = PApplet.radians(rotation);
+		newX = x + PApplet.round(amount * PApplet.cos(rotRad));
+		newY = y + PApplet.round(amount * PApplet.sin(rotRad));
 		moveTo(newX, newY);
 	}
 	
 	/**
-	 * Get the distance between this Turtle and point (x,y).
+	 * Get the distance between this Terrapin and point (x,y).
 	 * 
 	 * @param otherX
 	 *            location in x axis.
@@ -108,28 +109,28 @@ public class Turtle {
 	}
 	
 	/**
-	 * Get the distance between this Turtle and another.
+	 * Get the distance between this Terrapin and another.
 	 * 
 	 * @param t
-	 *            the other turtle.
+	 *            the other Terrapin.
 	 * @return distance in pixels.
 	 */
-	public int getDistance(Turtle t) {
+	public int getDistance(Terrapin t) {
 		return getDistance(t.x, t.y);
 	}
 	
 	/**
-	 * Get the nearest (Euclidean distance) Turtle from a List.
+	 * Get the nearest (Euclidean distance) Terrapin from a List.
 	 * 
-	 * @param turtles
+	 * @param Terrapins
 	 *            the list.
-	 * @return the nearest turtle.
+	 * @return the nearest Terrapin.
 	 */
-	public Turtle getNearest(List<Turtle> turtles) {
-		Turtle nearest = null;
+	public Terrapin getNearest(List<Terrapin> Terrapins) {
+		Terrapin nearest = null;
 		int nearestDist = Integer.MAX_VALUE;
 		
-		for (Turtle t : turtles) {
+		for (Terrapin t : Terrapins) {
 			int newDist = getDistance(t.x, t.y);
 			if (newDist < nearestDist) {
 				nearest = t;
@@ -141,27 +142,27 @@ public class Turtle {
 	}
 	
 	/**
-	 * Get the angle that the Turtle is facing.
+	 * Get the angle that the Terrapin is facing.
 	 * 
 	 * @return angle in degrees.
 	 */
 	public int getRotation() {
-		return (int) PApplet.degrees(rotation);
+		return Math.round(rotation);
 	}
 	
 	/**
-	 * Turn the Turtle left.
+	 * Turn the Terrapin left.
 	 * 
 	 * @param amount
 	 *            angle in degrees.
 	 */
 	public void left(int amount) {
-		rotation -= PApplet.radians(amount);
+		rotation -= amount;
 	}
 	
 	/**
-	 * Move the turtle to a specified point. Used internally to allow
-	 * HistoryTurtle to override this to record lines.
+	 * Move the Terrapin to a specified point. Used internally to allow
+	 * HistoryTerrapin to override this to record lines.
 	 * 
 	 * @param x
 	 *            location in x axis
@@ -179,7 +180,7 @@ public class Turtle {
 	}
 	
 	/**
-	 * Move the Turtle toward point (x,y).
+	 * Move the Terrapin toward point (x,y).
 	 * 
 	 * @param toX
 	 *            location in x axis.
@@ -187,7 +188,7 @@ public class Turtle {
 	 *            location in y axis.
 	 * @param amount
 	 *            value between 0 and 1 as a ratio of how close to move toward
-	 *            point (x,y); 0 will not move the turtle, 1 will cause it to
+	 *            point (x,y); 0 will not move the Terrapin, 1 will cause it to
 	 *            jump straight to (x,y), 0.5f will cause it to move half way
 	 *            there, etc.
 	 */
@@ -196,7 +197,7 @@ public class Turtle {
 	}
 	
 	/**
-	 * Move the Turtle a specified number of pixels toward point (x,y).
+	 * Move the Terrapin a specified number of pixels toward point (x,y).
 	 * 
 	 * @param toX
 	 *            location in x.
@@ -208,44 +209,44 @@ public class Turtle {
 	public void moveToward(int toX, int toY, int amount) {
 		applet.pushMatrix();
 		applet.translate(x, y);
-		rotation = PApplet.atan2(toY - y, toX - x);
+		rotation = PApplet.degrees(PApplet.atan2(toY - y, toX - x));
 		applet.popMatrix();
 		moveTo(toX, toY);
 	}
 	
 	/**
-	 * Move Turtle toward another.
+	 * Move Terrapin toward another.
 	 * 
 	 * @param t
-	 *            Turtle to move towards.
+	 *            Terrapin to move towards.
 	 * @param amount
 	 *            value between 0 and 1 as a ratio of how close to move toward
-	 *            point (x,y); 0 will not move the turtle, 1 will cause it to
+	 *            point (x,y); 0 will not move the Terrapin, 1 will cause it to
 	 *            jump straight to (x,y), 0.5f will cause it to move half way
 	 *            there, etc.
 	 *            
-	 * @see pturtle.Turtle#moveToward(int, int, float)
+	 * @see terrapin.Terrapin#moveToward(int, int, float)
 	 */
-	public void moveToward(Turtle t, float amount) {
+	public void moveToward(Terrapin t, float amount) {
 		moveToward(t.x, t.y, amount);
 	}
 	
 	/**
-	 * Move Turtle toward another.
+	 * Move Terrapin toward another.
 	 * 
 	 * @param t
-	 *            Turtle to move towards.
+	 *            Terrapin to move towards.
 	 * @param amount
 	 *            number of pixels to move toward (x,y).
 	 *            
-	 * @see pturtle.Turtle#moveToward(int, int, int)
+	 * @see terrapin.Terrapin#moveToward(int, int, int)
 	 */
-	public void moveToward(Turtle t, int amount) {
+	public void moveToward(Terrapin t, int amount) {
 		moveToward(t.x, t.y, amount);
 	}
 	
 	/**
-	 * Randomise the colour that the Turtle draws with from a set of 16
+	 * Randomise the colour that the Terrapin draws with from a set of 16
 	 * hard-coded colours.
 	 */
 	public void randomPenColor() {
@@ -302,17 +303,17 @@ public class Turtle {
 	}
 	
 	/**
-	 * Turn the Turtle right.
+	 * Turn the Terrapin right.
 	 * 
 	 * @param amount
 	 *            angle in degrees.
 	 */
 	public void right(int amount) {
-		rotation += PApplet.radians(amount);
+		rotation += amount;
 	}
 	
 	/**
-	 * Move the Turtle to an absolute location. <strong>This does not
+	 * Move the Terrapin to an absolute location. <strong>This does not
 	 * draw</strong>.
 	 * 
 	 * @param x
@@ -326,7 +327,7 @@ public class Turtle {
 	}
 	
 	/**
-	 * Set the colour the Turtle draws with.
+	 * Set the colour the Terrapin draws with.
 	 * 
 	 * @param color
 	 *            a colour created with
@@ -337,7 +338,7 @@ public class Turtle {
 	}
 	
 	/**
-	 * Set the colour the Turtle draws with.
+	 * Set the colour the Terrapin draws with.
 	 * 
 	 * @param r
 	 *            red value, 0-255.
@@ -351,20 +352,20 @@ public class Turtle {
 	}
 	
 	/**
-	 * Set the direction the Turtle is facing in to an absolute angle.
+	 * Set the direction the Terrapin is facing in to an absolute angle.
 	 * 
 	 * @param rotation
 	 *            angle in degrees.
 	 */
 	public void setRotation(int rotation) {
-		this.rotation = PApplet.radians(rotation);
+		this.rotation = rotation;
 	}
 	
 	/**
-	 * Strafe the Turtle left.
+	 * Strafe the Terrapin left.
 	 * 
 	 * @param amount
-	 *            number of pixels to strafe Turtle.
+	 *            number of pixels to strafe Terrapin.
 	 */
 	public void strafeLeft(int amount) {
 		left(90);
@@ -373,10 +374,10 @@ public class Turtle {
 	}
 	
 	/**
-	 * Strafe the Turtle right.
+	 * Strafe the Terrapin right.
 	 * 
 	 * @param amount
-	 *            number of pixels to strafe Turtle.
+	 *            number of pixels to strafe Terrapin.
 	 */
 	public void strafeRight(int amount) {
 		right(90);
@@ -385,13 +386,13 @@ public class Turtle {
 	}
 	
 	/**
-	 * Convert the Turtle to a String representation
+	 * Convert the Terrapin to a String representation
 	 * 
-	 * @return "Turtle at 100,100"
+	 * @return "Terrapin at 100,100"
 	 */
 	@Override
 	public String toString() {
-		return "Turtle at " + x + "," + y;
+		return "Terrapin at " + x + "," + y;
 	}
 	
 }
