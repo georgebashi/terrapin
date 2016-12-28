@@ -6,13 +6,13 @@
 
 
 	<!-- #### (1) where are your processing libraries located? edit location. #### -->
-	<property name="processing" location="/home/george/sketchbook/libraries" />
+	<property name="processing" location="/Users/huttarl/Documents/Processing3/libraries" />
 
 
 	<!-- #### (2) where are the jar files located that are required for compiling 
 		your library such as e.g. core.jar ? edit location. #### -->
 
-	<property name="libraryClasspath" location="/opt/processing/lib" />
+	<property name="libraryClasspath" location="/Applications/Processing.app/Contents/Java" />
 	<path id="library-classpath">
 		<fileset dir="${libraryClasspath}">
 			<!-- #### (3) add the jar files that are required for compiling. edit name.
@@ -39,32 +39,33 @@
 	<property name="copyright" value="(c) 2007" />
 
 	<!-- #### (7) give your library a name. edit value.  #### -->
-	<property name="libraryName" value="PTurtle" />
+	<property name="libraryName" value="Terrapin" />
 
 	<!-- #### (8) give your library a name. edit value.   #### -->
-	<property name="versionNumber" value="0.9" />
+	<property name="versionNumber" value="0.98" />
 
 	<!-- #### (9) your contact url. edit value. #### -->
 	<property name="yourLinkOne" value="http://georgebashi.com/" />
 	<property name="yourLinkTwo" value="http://ollieglass.com/" />
+	<property name="yourLinkThree" value="http://huttar.net/" />
 
 	<!-- #### (10) a comma separated list of keywords describing your library. edit value. #### -->
 	<property name="keywords" value="turtle, education, graphics, logo" />
 
 	<!-- #### (11) a comma separated list of platforms the library has been tested. edit value. #### -->
-	<property name="tested:platform" value="OS X 10.5, Windows XP, Linux" />
+	<property name="tested:platform" value="OS X 10.11.6, Windows XP, Linux" />
 
 	<!-- #### (12) the processing version this library has been tested with. edit value. #### -->
-	<property name="tested:processingVersion" value="1.0.2" />
+	<property name="tested:processingVersion" value="3.2.3" />
 
 	<!-- #### (13) does the library depend on any other library, dll, jnilib, etc. edit value. #### -->
 	<property name="tested:dependencies" value="none" />
 
 	<!-- #### (14) where can the source code be found? edit value. #### -->
-	<property name="source:host" value="sourceforge" />
-	<property name="source:url" value="http://pturtle.sourceforge.net/" />
+	<property name="source:host" value="github" />
+	<property name="source:url" value="https://github.com/georgebashi/terrapin" />
 	<property name="source:repository"
-	          value="http://pturtle.svn.sourceforge.net/viewvc/pturtle/" />
+	          value="https://github.com/georgebashi/terrapin" />
 
 
 

@@ -42,7 +42,8 @@ public class HistoryTerrapin extends Terrapin {
 	 */
 	public HistoryTerrapin(PApplet applet) {
 		super(applet);
-		applet.registerDraw(this);
+		// older versions of Processing: applet.registerDraw(this);
+		applet.registerMethod("draw", this);
 	}
 	
 	/**
@@ -53,7 +54,8 @@ public class HistoryTerrapin extends Terrapin {
 	 */
 	public HistoryTerrapin(Terrapin parent) {
 		super(parent);
-		applet.registerDraw(this);
+		// older versions of Processing: applet.registerDraw(this);
+		applet.registerMethod("draw", this);
 	}
 	
 	/**
@@ -69,7 +71,7 @@ public class HistoryTerrapin extends Terrapin {
 	}
 	
 	/**
-	 * Override {@link terrapin.Terrapin#moveTo(int, int)} to record lines.
+	 * Override {@link terrapin.Terrapin#moveTo(float, float)} to record lines.
 	 * 
 	 * @param x
 	 *            location in x axis
@@ -77,7 +79,7 @@ public class HistoryTerrapin extends Terrapin {
 	 *            location in y axis
 	 */
 	@Override
-	protected void moveTo(int x, int y) {
+	protected void moveTo(float x, float y) {
 		if (drawing) {
 			lines.add(new Line(applet, this.x, this.y, x, y, drawColor));
 		}
