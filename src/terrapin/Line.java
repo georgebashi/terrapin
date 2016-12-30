@@ -29,13 +29,13 @@ import processing.core.PApplet;
  */
 public class Line {
 	/** From location in x axis. */
-	public int fromX;
+	public float fromX;
 	/** From location in y axis. */
-	public int fromY;
+	public float fromY;
 	/** To location in x axis. */
-	public int toX;
+	public float toX;
 	/** To location in y axis. */
-	public int toY;
+	public float toY;
 	/**
 	 * Colour to draw line in, as a colour created with
 	 * {@link processing.core.PApplet#color(int, int, int)}.
@@ -57,8 +57,10 @@ public class Line {
 	 *            to location in x axis.
 	 * @param toY
 	 *            to location in y axis.
+	 * @param drawColor
+	 *            color of line.	 
 	 */
-	public Line(PApplet applet, int fromX, int fromY, int toX, int toY, int drawColor) {
+	public Line(PApplet applet, float fromX, float fromY, float toX, float toY, int drawColor) {
 		this.applet = applet;
 		this.fromX = fromX;
 		this.fromY = fromY;

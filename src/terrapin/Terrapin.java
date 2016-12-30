@@ -20,6 +20,7 @@
 package terrapin;
 
 import java.util.List;
+import java.util.ArrayDeque;
 import processing.core.PApplet;
 
 /**
@@ -30,15 +31,15 @@ import processing.core.PApplet;
  */
 public class Terrapin {
 	/** x location on screen. */
-	public int x;
+	public float x;
 	/** y location on screen. */
-	public int y;
+	public float y;
 	/** Colour of line drawn by Terrapin (as a Processing color). */
 	public int drawColor;
 	/** If false, the Terrapin moves but does not leave a trail. */
 	public boolean drawing = true;
 	/** The angle (in degrees) that the Terrapin is facing. */
-	private float rotation;
+	float rotation;
 	/** The PApplet to render to. */
 	public final PApplet applet;
 	
@@ -77,7 +78,7 @@ public class Terrapin {
 	 * @param amount
 	 *            number of pixels to move by.
 	 */
-	public void backward(int amount) {
+	public void backward(float amount) {
 		forward(-amount);
 	}
 	
@@ -87,11 +88,11 @@ public class Terrapin {
 	 * @param amount
 	 *            number of pixels to move by.
 	 */
-	public void forward(int amount) {
-		int newX, newY;
+	public void forward(float amount) {
+		float newX, newY;
 		float rotRad = PApplet.radians(rotation);
-		newX = x + PApplet.round(amount * PApplet.cos(rotRad));
-		newY = y + PApplet.round(amount * PApplet.sin(rotRad));
+		newX = x + amount * PApplet.cos(rotRad);
+		newY = y + amount * PApplet.sin(rotRad);
 		moveTo(newX, newY);
 	}
 	
@@ -104,8 +105,8 @@ public class Terrapin {
 	 *            location in y axis.
 	 * @return distance in pixels.
 	 */
-	public int getDistance(int otherX, int otherY) {
-		return (int) Math.sqrt(Math.pow((otherX - x), 2) + Math.pow((otherY - y), 2));
+	public float getDistance(float otherX, float otherY) {
+		return (float) Math.sqrt(Math.pow((otherX - x), 2) + Math.pow((otherY - y), 2));
 	}
 	
 	/**
@@ -115,7 +116,7 @@ public class Terrapin {
 	 *            the other Terrapin.
 	 * @return distance in pixels.
 	 */
-	public int getDistance(Terrapin t) {
+	public float getDistance(Terrapin t) {
 		return getDistance(t.x, t.y);
 	}
 	
@@ -128,10 +129,10 @@ public class Terrapin {
 	 */
 	public Terrapin getNearest(List<Terrapin> Terrapins) {
 		Terrapin nearest = null;
-		int nearestDist = Integer.MAX_VALUE;
+		float nearestDist = Float.MAX_VALUE;
 		
 		for (Terrapin t : Terrapins) {
-			int newDist = getDistance(t.x, t.y);
+			float newDist = getDistance(t.x, t.y);
 			if (newDist < nearestDist) {
 				nearest = t;
 				nearestDist = newDist;
@@ -146,8 +147,8 @@ public class Terrapin {
 	 * 
 	 * @return angle in degrees.
 	 */
-	public int getRotation() {
-		return Math.round(rotation);
+	public float getRotation() {
+		return rotation;
 	}
 	
 	/**
@@ -156,7 +157,7 @@ public class Terrapin {
 	 * @param amount
 	 *            angle in degrees.
 	 */
-	public void left(int amount) {
+	public void left(float amount) {
 		rotation -= amount;
 	}
 	
@@ -169,7 +170,7 @@ public class Terrapin {
 	 * @param y
 	 *            location in y axis
 	 */
-	protected void moveTo(int x, int y) {
+	protected void moveTo(float x, float y) {
 		if (drawing) {
 			applet.stroke(drawColor);
 			applet.line(this.x, this.y, x, y);
@@ -186,14 +187,14 @@ public class Terrapin {
 	 *            location in x axis.
 	 * @param toY
 	 *            location in y axis.
-	 * @param amount
+	 * @param ratio
 	 *            value between 0 and 1 as a ratio of how close to move toward
 	 *            point (x,y); 0 will not move the Terrapin, 1 will cause it to
 	 *            jump straight to (x,y), 0.5f will cause it to move half way
 	 *            there, etc.
 	 */
-	public void moveToward(int toX, int toY, float amount) {
-		moveToward(toX, toY, (int) (getDistance(toX, toY) * amount));
+	public void moveTowardByRatio(float toX, float toY, float ratio) {
+		moveTowardByDistance(toX, toY, getDistance(toX, toY) * ratio);
 	}
 	
 	/**
@@ -203,10 +204,10 @@ public class Terrapin {
 	 *            location in x.
 	 * @param toY
 	 *            location in y.
-	 * @param amount
+	 * @param distance
 	 *            number of pixels to move toward (x,y).
 	 */
-	public void moveToward(int toX, int toY, int amount) {
+	public void moveTowardByDistance(float toX, float toY, float distance) {
 		applet.pushMatrix();
 		applet.translate(x, y);
 		rotation = PApplet.degrees(PApplet.atan2(toY - y, toX - x));
@@ -219,16 +220,16 @@ public class Terrapin {
 	 * 
 	 * @param t
 	 *            Terrapin to move towards.
-	 * @param amount
+	 * @param ratio
 	 *            value between 0 and 1 as a ratio of how close to move toward
 	 *            point (x,y); 0 will not move the Terrapin, 1 will cause it to
 	 *            jump straight to (x,y), 0.5f will cause it to move half way
 	 *            there, etc.
 	 *            
-	 * @see terrapin.Terrapin#moveToward(int, int, float)
+	 * @see terrapin.Terrapin#moveTowardByRatio(float, float, float)
 	 */
-	public void moveToward(Terrapin t, float amount) {
-		moveToward(t.x, t.y, amount);
+	public void moveTowardByRatio(Terrapin t, float ratio) {
+		moveTowardByRatio(t.x, t.y, ratio);
 	}
 	
 	/**
@@ -236,13 +237,13 @@ public class Terrapin {
 	 * 
 	 * @param t
 	 *            Terrapin to move towards.
-	 * @param amount
+	 * @param distance
 	 *            number of pixels to move toward (x,y).
 	 *            
-	 * @see terrapin.Terrapin#moveToward(int, int, int)
+	 * @see terrapin.Terrapin#moveTowardByDistance(float, float, float)
 	 */
-	public void moveToward(Terrapin t, int amount) {
-		moveToward(t.x, t.y, amount);
+	public void moveTowardByDistance(Terrapin t, float distance) {
+		moveTowardByDistance(t.x, t.y, distance);
 	}
 	
 	/**
@@ -308,7 +309,7 @@ public class Terrapin {
 	 * @param amount
 	 *            angle in degrees.
 	 */
-	public void right(int amount) {
+	public void right(float amount) {
 		rotation += amount;
 	}
 	
@@ -321,7 +322,7 @@ public class Terrapin {
 	 * @param y
 	 *            location in y axis.
 	 */
-	public void setLocation(int x, int y) {
+	public void setLocation(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -357,7 +358,7 @@ public class Terrapin {
 	 * @param rotation
 	 *            angle in degrees.
 	 */
-	public void setRotation(int rotation) {
+	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
 	
@@ -367,7 +368,7 @@ public class Terrapin {
 	 * @param amount
 	 *            number of pixels to strafe Terrapin.
 	 */
-	public void strafeLeft(int amount) {
+	public void strafeLeft(float amount) {
 		left(90);
 		forward(amount);
 		right(90);
@@ -379,7 +380,7 @@ public class Terrapin {
 	 * @param amount
 	 *            number of pixels to strafe Terrapin.
 	 */
-	public void strafeRight(int amount) {
+	public void strafeRight(float amount) {
 		right(90);
 		forward(amount);
 		left(90);
@@ -394,5 +395,4 @@ public class Terrapin {
 	public String toString() {
 		return "Terrapin at " + x + "," + y;
 	}
-	
 }
