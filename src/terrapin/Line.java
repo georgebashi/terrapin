@@ -57,6 +57,8 @@ public class Line {
 	 *            to location in x axis.
 	 * @param toY
 	 *            to location in y axis.
+	 * @param drawColor
+	 *            color of line.	 
 	 */
 	public Line(PApplet applet, float fromX, float fromY, float toX, float toY, int drawColor) {
 		this.applet = applet;

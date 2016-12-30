@@ -42,7 +42,6 @@ public class HistoryTerrapin extends Terrapin {
 	 */
 	public HistoryTerrapin(PApplet applet) {
 		super(applet);
-		// older versions of Processing: applet.registerDraw(this);
 		applet.registerMethod("draw", this);
 	}
 	
@@ -54,7 +53,6 @@ public class HistoryTerrapin extends Terrapin {
 	 */
 	public HistoryTerrapin(Terrapin parent) {
 		super(parent);
-		// older versions of Processing: applet.registerDraw(this);
 		applet.registerMethod("draw", this);
 	}
 	

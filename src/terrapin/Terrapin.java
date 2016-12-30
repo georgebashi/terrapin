@@ -193,8 +193,8 @@ public class Terrapin {
 	 *            jump straight to (x,y), 0.5f will cause it to move half way
 	 *            there, etc.
 	 */
-	public void moveTowardRatio(float toX, float toY, float ratio) {
-		moveTowardDistance(toX, toY, getDistance(toX, toY) * ratio);
+	public void moveTowardByRatio(float toX, float toY, float ratio) {
+		moveTowardByDistance(toX, toY, getDistance(toX, toY) * ratio);
 	}
 	
 	/**
@@ -207,7 +207,7 @@ public class Terrapin {
 	 * @param distance
 	 *            number of pixels to move toward (x,y).
 	 */
-	public void moveTowardDistance(float toX, float toY, float distance) {
+	public void moveTowardByDistance(float toX, float toY, float distance) {
 		applet.pushMatrix();
 		applet.translate(x, y);
 		rotation = PApplet.degrees(PApplet.atan2(toY - y, toX - x));
@@ -226,10 +226,10 @@ public class Terrapin {
 	 *            jump straight to (x,y), 0.5f will cause it to move half way
 	 *            there, etc.
 	 *            
-	 * @see terrapin.Terrapin#moveTowardRatio(float, float, float)
+	 * @see terrapin.Terrapin#moveTowardByRatio(float, float, float)
 	 */
-	public void moveTowardRatio(Terrapin t, float ratio) {
-		moveTowardRatio(t.x, t.y, ratio);
+	public void moveTowardByRatio(Terrapin t, float ratio) {
+		moveTowardByRatio(t.x, t.y, ratio);
 	}
 	
 	/**
@@ -240,10 +240,10 @@ public class Terrapin {
 	 * @param distance
 	 *            number of pixels to move toward (x,y).
 	 *            
-	 * @see terrapin.Terrapin#moveTowardDistance(float, float, float)
+	 * @see terrapin.Terrapin#moveTowardByDistance(float, float, float)
 	 */
-	public void moveTowardDistance(Terrapin t, float distance) {
-		moveTowardDistance(t.x, t.y, distance);
+	public void moveTowardByDistance(Terrapin t, float distance) {
+		moveTowardByDistance(t.x, t.y, distance);
 	}
 	
 	/**
@@ -394,34 +394,5 @@ public class Terrapin {
 	@Override
 	public String toString() {
 		return "Terrapin at " + x + "," + y;
-	}
-	
-	ArrayDeque<State> stack = new ArrayDeque<State>();
-
-	/**
-	 * Save Terrapin state on an internal stack.
-	 * Includes location, rotation, drawColor, and drawing (boolean) state.
-	 *
-	 * @see terrapin.Terrapin#pop()
-	 */	
-	public void push() {
-	  stack.addFirst(new State(this));
-	}
-	
-	/**
-	 * Restore Terrapin state from internal stack.
-	 * Includes location, rotation, drawColor, and drawing (boolean) state.
-	 *
-	 * @see terrapin.Terrapin#push()
-	 */	
-	public void pop() {
-	  // TODO: should we check for empty, and print a helpful warning?
-	  // Or just let exceptions happen?
-	  State poppedState = stack.removeFirst();
-	  x = poppedState.mX;
-	  y = poppedState.mY;
-	  rotation = poppedState.mRotation;
-	  drawColor = poppedState.mDrawColor;
-	  drawing = poppedState.mDrawing;
 	}
 }
